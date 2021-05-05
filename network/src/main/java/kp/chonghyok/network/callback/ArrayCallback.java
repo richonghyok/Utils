@@ -10,6 +10,7 @@ import okhttp3.Response;
 import okhttp3.ResponseBody;
 
 public abstract class ArrayCallback<T> implements Callback {
+
     public abstract void onSuccess(List<T> responseBodyEntity);
 
     public abstract void onFailure();
