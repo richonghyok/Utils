@@ -14,7 +14,7 @@ public abstract class ArrayCallback<T> implements Callback {
 
     public abstract void onSuccess(List<T> responseBodyEntity);
 
-    public abstract void onFailure();
+    public abstract void onFailure(String exception);
 
     public void onProcess(Response response, Type typeOfT) {
         if (response.isSuccessful()) {
@@ -27,20 +27,22 @@ public abstract class ArrayCallback<T> implements Callback {
                         List<T> resArray = gson.fromJson(result, typeOfT);
                         if (resArray != null) {
                             onSuccess(resArray);
+                        } else {
+                            onFailure("gson转换为空");
                         }
                     } catch (JsonSyntaxException e) {
                         e.printStackTrace();
-                        onFailure();
+                        onFailure(e.getMessage());
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
-                    onFailure();
+                    onFailure(e.getMessage());
                 }
             } else {
-                onFailure();
+                onFailure("body为空");
             }
         } else {
-            onFailure();
+            onFailure("请求失败(非200)");
         }
     }
 }
