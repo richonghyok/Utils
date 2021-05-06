@@ -12,8 +12,9 @@ import okhttp3.CookieJar;
 import okhttp3.HttpUrl;
 
 public class LocalCookieJar implements CookieJar {
+    static LocalCookieJar cookieJar = new LocalCookieJar();
 
-    public static void clear(){
+    public static void clear() {
         cookiesMap = new HashMap<>();
     }
 
@@ -30,5 +31,9 @@ public class LocalCookieJar implements CookieJar {
     public List<Cookie> loadForRequest(HttpUrl url) {
         List<Cookie> cookiesList = cookiesMap.get(url.host());
         return cookiesList != null ? cookiesList : new ArrayList<>();
+    }
+
+    public static LocalCookieJar getCookieJar() {
+        return cookieJar;
     }
 }

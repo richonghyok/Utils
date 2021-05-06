@@ -12,9 +12,12 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
+import static kp.chonghyok.net.cookie.LocalCookieJar.getCookieJar;
+
 public class GetAsync {
     public static <T> void getAsync(String url, Class<T> classOfT, ObjCallback<T> callback) {
         OkHttpClient client = new OkHttpClient.Builder()
+                .cookieJar(getCookieJar())
                 .build();
         Request request = new Request.Builder()
                 .url(url)
@@ -34,7 +37,9 @@ public class GetAsync {
     }
 
     public static <T> void getAsync(String url, Type typeOfT, ArrayCallback<T> callback) {
-        OkHttpClient client = new OkHttpClient.Builder().build();
+        OkHttpClient client = new OkHttpClient.Builder()
+                .cookieJar(getCookieJar())
+                .build();
         Request request = new Request.Builder().url(url).build();
         Call call = client.newCall(request);
         call.enqueue(new okhttp3.Callback() {

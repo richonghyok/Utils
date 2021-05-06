@@ -17,14 +17,17 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 
+import static kp.chonghyok.net.cookie.LocalCookieJar.getCookieJar;
 import static kp.chonghyok.net.request.Constant.JSON;
 
 public class PostSync {
     @Nullable
     public static <T1 extends ResponseEntity, T2> List<T1> postSync(String url, T2 reqBody, Type typeOfT) {
-        Thread mThread = null;
+        Thread mThread;
         ResponseResult<List<T1>> responseResult = new ResponseResult<>();
-        OkHttpClient client = new OkHttpClient.Builder().build();
+        OkHttpClient client = new OkHttpClient.Builder()
+                .cookieJar(getCookieJar())
+                .build();
         Request request = new Request.Builder()
                 .url(url)
                 .get()
@@ -65,7 +68,9 @@ public class PostSync {
         Thread mThread;
         ResponseResult<T1> responseResult = new ResponseResult<>();
         RequestBody requestBody = RequestBody.create(new Gson().toJson(reqBody), JSON);
-        OkHttpClient client = new OkHttpClient.Builder().build();
+        OkHttpClient client = new OkHttpClient.Builder()
+                .cookieJar(getCookieJar())
+                .build();
         Request request = new Request.Builder()
                 .url(url)
                 .post(requestBody)
