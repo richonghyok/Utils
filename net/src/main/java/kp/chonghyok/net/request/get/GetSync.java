@@ -1,5 +1,7 @@
 package kp.chonghyok.net.request.get;
 
+import android.util.Log;
+
 import com.google.gson.Gson;
 
 import java.io.IOException;
@@ -14,11 +16,15 @@ import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 
+import static kp.chonghyok.net.cookie.LocalCookieJar.getCookieJar;
+
 public class GetSync {
     public static <T extends ResponseEntity> List<T> getSync(String url, Type typeOfT) {
+        Log.d("getSync", url);
         Thread mThread = null;
         ResponseResult<List<T>> responseResult = new ResponseResult<>();
-        OkHttpClient client = new OkHttpClient.Builder().build();
+        OkHttpClient client = new OkHttpClient.Builder()
+                .build();
         Request request = new Request.Builder()
                 .url(url)
                 .get()
@@ -55,6 +61,7 @@ public class GetSync {
     }
 
     public static <T extends ResponseEntity> T getSync(String url, Class<T> classOfT) {
+        Log.d("getSync", url);
         Thread mThread;
         ResponseResult<T> responseResult = new ResponseResult<>();
         OkHttpClient client = new OkHttpClient.Builder().build();
@@ -92,10 +99,16 @@ public class GetSync {
         }
         return null;
     }
-    public static Response getSync(String url) {
+
+    public static String getSync(String url) {
+        Log.d("getSync", url);
         Thread mThread;
-        ResponseResult<Response> responseResult = new ResponseResult<>();
-        OkHttpClient client = new OkHttpClient.Builder().build();
+        ResponseResult<String> responseResult = new ResponseResult<>();
+        OkHttpClient client = new OkHttpClient.Builder()
+                .cookieJar(getCookieJar())
+                .followRedirects(true)
+                .followSslRedirects(true)
+                .build();
         Request request = new Request.Builder()
                 .url(url)
                 .get()
@@ -105,7 +118,10 @@ public class GetSync {
             try {
                 Response response = call.execute();
                 if (response.isSuccessful()) {
-                    responseResult.setResult(response);
+                    ResponseBody body = response.body();
+                    if (body != null) {
+                        responseResult.setResult(body.string());
+                    }
                 }
             } catch (IOException e) {
                 e.printStackTrace();

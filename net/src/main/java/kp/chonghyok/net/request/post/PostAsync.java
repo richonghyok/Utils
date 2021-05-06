@@ -1,5 +1,7 @@
 package kp.chonghyok.net.request.post;
 
+import android.util.Log;
+
 import com.google.gson.Gson;
 
 import org.jetbrains.annotations.NotNull;
@@ -10,6 +12,7 @@ import java.lang.reflect.Type;
 import kp.chonghyok.net.callback.ArrayCallback;
 import kp.chonghyok.net.callback.ObjCallback;
 import okhttp3.Call;
+import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -20,6 +23,7 @@ import static kp.chonghyok.net.request.Constant.JSON;
 
 public class PostAsync {
     public static <T1, T2> void postAsync(String url, T2 reqBody, Class<T1> classOfT, ObjCallback<T1> callback) {
+        Log.d("postAsync", url);
         RequestBody requestBody = RequestBody.create(new Gson().toJson(reqBody), JSON);
         OkHttpClient client = new OkHttpClient.Builder()
                 .cookieJar(getCookieJar())
@@ -43,6 +47,7 @@ public class PostAsync {
     }
 
     public static <T1, T2> void postAsync(String url, T2 reqBody, Type typeOfT, ArrayCallback<T1> callback) {
+        Log.d("postAsync", url);
         RequestBody requestBody = RequestBody.create(new Gson().toJson(reqBody), JSON);
         OkHttpClient client = new OkHttpClient.Builder()
                 .cookieJar(getCookieJar())
@@ -65,14 +70,16 @@ public class PostAsync {
         });
     }
 
-    public static <T> void postAsync(String url, T reqBody, ObjCallback<Response> callback) {
-        RequestBody requestBody = RequestBody.create(new Gson().toJson(reqBody), JSON);
+    public static <T> void postAsync(String url, RequestBody reqBody, ObjCallback<Response> callback) {
+        Log.d("postAsync", url);
         OkHttpClient client = new OkHttpClient.Builder()
+                .followRedirects(true)
+                .followSslRedirects(true)
                 .cookieJar(getCookieJar())
                 .build();
         Request request = new Request.Builder()
                 .url(url)
-                .post(requestBody)
+                .post(reqBody)
                 .build();
         Call call = client.newCall(request);
         call.enqueue(new okhttp3.Callback() {

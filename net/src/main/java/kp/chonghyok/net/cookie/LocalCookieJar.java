@@ -1,5 +1,7 @@
 package kp.chonghyok.net.cookie;
 
+import android.util.Log;
+
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -18,18 +20,19 @@ public class LocalCookieJar implements CookieJar {
         cookiesMap = new HashMap<>();
     }
 
-    private static Map<String, List<Cookie>> cookiesMap = new HashMap<>();
+    private static Map<HttpUrl, List<Cookie>> cookiesMap = new HashMap<>();
 
     @Override
-    public synchronized void saveFromResponse(HttpUrl url, @NotNull List<Cookie> cookies) {
-        String host = url.host();
-        cookiesMap.put(host, cookies);
+    public synchronized void saveFromResponse(@NotNull HttpUrl url, @NotNull List<Cookie> cookies) {
+        Log.d("cookie", "saveFromResponse: " + cookiesMap);
+        cookiesMap.put(url, cookies);
     }
 
     @NotNull
     @Override
-    public List<Cookie> loadForRequest(HttpUrl url) {
-        List<Cookie> cookiesList = cookiesMap.get(url.host());
+    public List<Cookie> loadForRequest(@NotNull HttpUrl url) {
+        Log.d("cookie", "loadForRequest: " + cookiesMap);
+        List<Cookie> cookiesList = cookiesMap.get(url);
         return cookiesList != null ? cookiesList : new ArrayList<>();
     }
 
