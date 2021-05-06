@@ -11,6 +11,7 @@ import java.util.List;
 import kp.chonghyok.net.response.ResponseEntity;
 import kp.chonghyok.net.response.ResponseResult;
 import okhttp3.Call;
+import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -21,7 +22,7 @@ import static kp.chonghyok.net.cookie.LocalCookieJar.getCookieJar;
 public class GetSync {
     public static <T extends ResponseEntity> List<T> getSync(String url, Type typeOfT) {
         Log.d("getSync", url);
-        Thread mThread = null;
+        Thread mThread;
         ResponseResult<List<T>> responseResult = new ResponseResult<>();
         OkHttpClient client = new OkHttpClient.Builder()
                 .build();
