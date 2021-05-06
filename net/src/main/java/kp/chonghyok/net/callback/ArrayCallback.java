@@ -1,6 +1,7 @@
 package kp.chonghyok.net.callback;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -22,9 +23,14 @@ public abstract class ArrayCallback<T> implements Callback {
                 try {
                     String result = body.string();
                     Gson gson = new Gson();
-                    List<T> resArray = gson.fromJson(result, typeOfT);
-                    if (resArray != null) {
-                        onSuccess(resArray);
+                    try {
+                        List<T> resArray = gson.fromJson(result, typeOfT);
+                        if (resArray != null) {
+                            onSuccess(resArray);
+                        }
+                    } catch (JsonSyntaxException e) {
+                        e.printStackTrace();
+                        onFailure();
                     }
                 } catch (IOException e) {
                     e.printStackTrace();

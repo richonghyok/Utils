@@ -1,6 +1,7 @@
 package kp.chonghyok.net.callback;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 
 import java.io.IOException;
 
@@ -19,10 +20,15 @@ public abstract class ObjCallback<T> implements Callback {
                 try {
                     String result = body.string();
                     Gson gson = new Gson();
-                    T obj = gson.fromJson(result, cls);
-                    if (obj != null) {
-                        onSuccess(obj);
-                    } else {
+                    try {
+                        T obj = gson.fromJson(result, cls);
+                        if (obj != null) {
+                            onSuccess(obj);
+                        } else {
+                            onFailure();
+                        }
+                    } catch (JsonSyntaxException e) {
+                        e.printStackTrace();
                         onFailure();
                     }
                 } catch (IOException e) {
