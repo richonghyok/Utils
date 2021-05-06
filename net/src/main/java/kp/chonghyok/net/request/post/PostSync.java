@@ -27,7 +27,7 @@ public class PostSync {
         Thread mThread;
         RequestBody requestBody = RequestBody.create(new Gson().toJson(reqEntity), JSON);
         ResponseResult<List<T1>> responseResult = new ResponseResult<>();
-        OkHttpClient client = new OkHttpClient.Builder()
+        OkHttpClient client = new OkHttpClient().newBuilder()
                 .cookieJar(getCookieJar())
                 .build();
         Request request = new Request.Builder()
@@ -76,7 +76,7 @@ public class PostSync {
         Thread mThread;
         ResponseResult<T1> responseResult = new ResponseResult<>();
         RequestBody requestBody = RequestBody.create(new Gson().toJson(reqEntity), JSON);
-        OkHttpClient client = new OkHttpClient.Builder()
+        OkHttpClient client = new OkHttpClient().newBuilder()
                 .cookieJar(getCookieJar())
                 .build();
         Request request = new Request.Builder()

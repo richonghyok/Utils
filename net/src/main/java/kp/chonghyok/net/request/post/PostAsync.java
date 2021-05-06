@@ -24,7 +24,7 @@ public class PostAsync {
     public static <T1, T2> void postAsync(String url, T2 reqEntity, Class<T1> classOfT, ObjCallback<T1> callback) {
         Log.d("postAsync", url);
         RequestBody requestBody = RequestBody.create(new Gson().toJson(reqEntity), JSON);
-        OkHttpClient client = new OkHttpClient.Builder()
+        OkHttpClient client = new OkHttpClient().newBuilder()
                 .cookieJar(getCookieJar())
                 .build();
         Request request = new Request.Builder()
@@ -48,7 +48,7 @@ public class PostAsync {
     public static <T1, T2> void postAsync(String url, T2 reqEntity, Type typeOfT, ArrayCallback<T1> callback) {
         Log.d("postAsync", url);
         RequestBody requestBody = RequestBody.create(new Gson().toJson(reqEntity), JSON);
-        OkHttpClient client = new OkHttpClient.Builder()
+        OkHttpClient client = new OkHttpClient().newBuilder()
                 .cookieJar(getCookieJar())
                 .build();
         Request request = new Request.Builder()
@@ -71,7 +71,7 @@ public class PostAsync {
 
     public static <T> void postAsync(String url, RequestBody reqBody, ObjCallback<Response> callback) {
         Log.d("postAsync", url);
-        OkHttpClient client = new OkHttpClient.Builder()
+        OkHttpClient client = new OkHttpClient().newBuilder()
                 .followRedirects(true)
                 .followSslRedirects(true)
                 .cookieJar(getCookieJar())

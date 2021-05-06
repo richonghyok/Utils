@@ -20,7 +20,7 @@ import static kp.chonghyok.net.cookie.LocalCookieJar.getCookieJar;
 
 public class GetAsync {
     public static <T> void getAsync(String url, Class<T> classOfT, ObjCallback<T> callback) {
-        OkHttpClient client = new OkHttpClient.Builder()
+        OkHttpClient client = new OkHttpClient().newBuilder()
                 .cookieJar(getCookieJar())
                 .build();
         Request request = new Request.Builder()
@@ -61,7 +61,7 @@ public class GetAsync {
 
     public static void getAsync(String url, ObjCallback<String> callback) {
         Log.d("getSync", url);
-        OkHttpClient client = new OkHttpClient.Builder()
+        OkHttpClient client = new OkHttpClient().newBuilder()
                 .cookieJar(getCookieJar())
                 .followRedirects(true)
                 .followSslRedirects(true)

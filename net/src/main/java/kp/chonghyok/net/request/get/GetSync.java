@@ -24,7 +24,7 @@ public class GetSync {
         Log.d("getSync", url);
         Thread mThread;
         ResponseResult<List<T>> responseResult = new ResponseResult<>();
-        OkHttpClient client = new OkHttpClient.Builder()
+        OkHttpClient client = new OkHttpClient().newBuilder()
                 .build();
         Request request = new Request.Builder()
                 .url(url)
@@ -65,7 +65,7 @@ public class GetSync {
         Log.d("getSync", url);
         Thread mThread;
         ResponseResult<T> responseResult = new ResponseResult<>();
-        OkHttpClient client = new OkHttpClient.Builder().build();
+        OkHttpClient client = new OkHttpClient().newBuilder().build();
         Request request = new Request.Builder()
                 .url(url)
                 .get()
@@ -110,7 +110,7 @@ public class GetSync {
         Log.d("getSync", url);
         Thread mThread;
         ResponseResult<String> responseResult = new ResponseResult<>();
-        OkHttpClient client = new OkHttpClient.Builder()
+        OkHttpClient client = new OkHttpClient().newBuilder()
                 .cookieJar(getCookieJar())
                 .followRedirects(true)
                 .followSslRedirects(true)
