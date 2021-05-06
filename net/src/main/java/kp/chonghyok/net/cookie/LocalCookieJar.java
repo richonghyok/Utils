@@ -15,7 +15,7 @@ import okhttp3.HttpUrl;
 
 public class LocalCookieJar implements CookieJar {
     static LocalCookieJar cookieJar = new LocalCookieJar();
-    private static Map<HttpUrl, List<Cookie>> cookiesMap = new HashMap<>();
+    private static Map<String, List<Cookie>> cookiesMap = new HashMap<>();
 
     public static void clear() {
         cookiesMap = new HashMap<>();
@@ -28,21 +28,21 @@ public class LocalCookieJar implements CookieJar {
     @Override
     public synchronized void saveFromResponse(@NotNull HttpUrl url, @NotNull List<Cookie> cookies) {
         Log.d("cookie", "saveFromResponse: " + cookiesMap);
-        cookiesMap.put(url, cookies);
+        cookiesMap.put(url.host(), cookies);
     }
 
     @NotNull
     @Override
     public List<Cookie> loadForRequest(@NotNull HttpUrl url) {
         Log.d("cookie", "loadForRequest: " + cookiesMap);
-        List<Cookie> cookiesList = cookiesMap.get(url);
+        List<Cookie> cookiesList = cookiesMap.get(url.host());
         return cookiesList != null ? cookiesList : new ArrayList<>();
     }
 
     public List<Cookie> getCookies(String host, String name) {
         List<Cookie> cookieList = new ArrayList<>();
-        cookiesMap.forEach((httpUrl, cookies) -> {
-            if (httpUrl.host().equals(host)) {
+        cookiesMap.forEach((s, cookies) -> {
+            if (s.equals(host)) {
                 cookies.forEach(cookie -> {
                     if (cookie.name().equals(name)) {
                         cookieList.add(cookie);

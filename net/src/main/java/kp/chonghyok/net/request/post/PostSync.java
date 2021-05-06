@@ -1,6 +1,7 @@
 package kp.chonghyok.net.request.post;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -44,7 +45,12 @@ public class PostSync {
                         try {
                             String result = body.string();
                             Gson gson = new Gson();
-                            responseResult.setResult(gson.fromJson(result, typeOfT));
+                            try {
+                                List<T1> t1List = gson.fromJson(result, typeOfT);
+                                responseResult.setResult(t1List);
+                            } catch (JsonSyntaxException e) {
+                                e.printStackTrace();
+                            }
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -87,7 +93,12 @@ public class PostSync {
                         try {
                             String result = body.string();
                             Gson gson = new Gson();
-                            responseResult.setResult(gson.fromJson(result, classOfT));
+                            try {
+                                T1 t1 = gson.fromJson(result, classOfT);
+                                responseResult.setResult(t1);
+                            } catch (JsonSyntaxException e) {
+                                e.printStackTrace();
+                            }
                         } catch (IOException e) {
                             e.printStackTrace();
                         }

@@ -3,6 +3,7 @@ package kp.chonghyok.net.request.get;
 import android.util.Log;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -11,7 +12,6 @@ import java.util.List;
 import kp.chonghyok.net.response.ResponseEntity;
 import kp.chonghyok.net.response.ResponseResult;
 import okhttp3.Call;
-import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -80,7 +80,12 @@ public class GetSync {
                         try {
                             String result = body.string();
                             Gson gson = new Gson();
-                            responseResult.setResult(gson.fromJson(result, classOfT));
+                            try {
+                                T res = gson.fromJson(result, classOfT);
+                                responseResult.setResult(res);
+                            } catch (JsonSyntaxException e) {
+                                e.printStackTrace();
+                            }
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
