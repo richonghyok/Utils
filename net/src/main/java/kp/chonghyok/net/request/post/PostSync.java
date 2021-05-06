@@ -52,8 +52,7 @@ public class PostSync {
         mThread = new Thread(runnable);
         mThread.start();
         try {
-            if (mThread != null)
-                mThread.join();
+            mThread.join();
             return responseResult.getResult();
         } catch (InterruptedException e) {
             e.printStackTrace();

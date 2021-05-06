@@ -46,8 +46,7 @@ public class GetSync {
         mThread = new Thread(runnable);
         mThread.start();
         try {
-            if (mThread != null)
-                mThread.join();
+            mThread.join();
             return responseResult.getResult();
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -78,6 +77,35 @@ public class GetSync {
                             e.printStackTrace();
                         }
                     }
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        };
+        mThread = new Thread(runnable);
+        mThread.start();
+        try {
+            mThread.join();
+            return responseResult.getResult();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    public static Response getSync(String url) {
+        Thread mThread;
+        ResponseResult<Response> responseResult = new ResponseResult<>();
+        OkHttpClient client = new OkHttpClient.Builder().build();
+        Request request = new Request.Builder()
+                .url(url)
+                .get()
+                .build();
+        Call call = client.newCall(request);
+        Runnable runnable = () -> {
+            try {
+                Response response = call.execute();
+                if (response.isSuccessful()) {
+                    responseResult.setResult(response);
                 }
             } catch (IOException e) {
                 e.printStackTrace();
