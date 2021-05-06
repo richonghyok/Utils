@@ -1,2 +1,2 @@
-include ':network'
 rootProject.name = "Utils"
+include ':net'
