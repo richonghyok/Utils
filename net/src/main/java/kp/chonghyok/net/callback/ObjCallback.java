@@ -11,8 +11,6 @@ import okhttp3.ResponseBody;
 public abstract class ObjCallback<T> implements Callback {
     public abstract void onSuccess(T responseBodyEntity);
 
-    public abstract void onFailure();
-
     public void onProcess(Response response, Class<T> cls) {
         if (response.isSuccessful()) {
             ResponseBody body = response.body();
@@ -25,21 +23,21 @@ public abstract class ObjCallback<T> implements Callback {
                         if (obj != null) {
                             onSuccess(obj);
                         } else {
-                            onFailure();
+                            onFailure("gson转换为空");
                         }
                     } catch (JsonSyntaxException e) {
                         e.printStackTrace();
-                        onFailure();
+                        onFailure(e.getMessage());
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
-                    onFailure();
+                    onFailure(e.getMessage());
                 }
             } else {
-                onFailure();
+                onFailure("body为空");
             }
         } else {
-            onFailure();
+            onFailure("请求失败(非200)");
         }
     }
 }

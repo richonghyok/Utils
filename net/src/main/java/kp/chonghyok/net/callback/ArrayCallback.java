@@ -14,8 +14,6 @@ public abstract class ArrayCallback<T> implements Callback {
 
     public abstract void onSuccess(List<T> responseBodyEntity);
 
-    public abstract void onFailure(String exception);
-
     public void onProcess(Response response, Type typeOfT) {
         if (response.isSuccessful()) {
             ResponseBody body = response.body();
