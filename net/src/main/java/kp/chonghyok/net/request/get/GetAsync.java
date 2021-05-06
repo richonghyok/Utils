@@ -84,7 +84,7 @@ public class GetAsync {
                     if (body != null) {
                         String html = body.string();
                         callback.onSuccess(html);
-                    }else{
+                    } else {
                         callback.onFailure();
                     }
                 } else {

@@ -15,12 +15,15 @@ import okhttp3.HttpUrl;
 
 public class LocalCookieJar implements CookieJar {
     static LocalCookieJar cookieJar = new LocalCookieJar();
+    private static Map<HttpUrl, List<Cookie>> cookiesMap = new HashMap<>();
 
     public static void clear() {
         cookiesMap = new HashMap<>();
     }
 
-    private static Map<HttpUrl, List<Cookie>> cookiesMap = new HashMap<>();
+    public static LocalCookieJar getCookieJar() {
+        return cookieJar;
+    }
 
     @Override
     public synchronized void saveFromResponse(@NotNull HttpUrl url, @NotNull List<Cookie> cookies) {
@@ -34,9 +37,5 @@ public class LocalCookieJar implements CookieJar {
         Log.d("cookie", "loadForRequest: " + cookiesMap);
         List<Cookie> cookiesList = cookiesMap.get(url);
         return cookiesList != null ? cookiesList : new ArrayList<>();
-    }
-
-    public static LocalCookieJar getCookieJar() {
-        return cookieJar;
     }
 }

@@ -22,6 +22,8 @@ public abstract class ObjCallback<T> implements Callback {
                     T obj = gson.fromJson(result, cls);
                     if (obj != null) {
                         onSuccess(obj);
+                    } else {
+                        onFailure();
                     }
                 } catch (IOException e) {
                     e.printStackTrace();

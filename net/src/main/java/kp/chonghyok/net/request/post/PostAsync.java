@@ -12,7 +12,6 @@ import java.lang.reflect.Type;
 import kp.chonghyok.net.callback.ArrayCallback;
 import kp.chonghyok.net.callback.ObjCallback;
 import okhttp3.Call;
-import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -22,9 +21,9 @@ import static kp.chonghyok.net.cookie.LocalCookieJar.getCookieJar;
 import static kp.chonghyok.net.request.Constant.JSON;
 
 public class PostAsync {
-    public static <T1, T2> void postAsync(String url, T2 reqBody, Class<T1> classOfT, ObjCallback<T1> callback) {
+    public static <T1, T2> void postAsync(String url, T2 reqEntity, Class<T1> classOfT, ObjCallback<T1> callback) {
         Log.d("postAsync", url);
-        RequestBody requestBody = RequestBody.create(new Gson().toJson(reqBody), JSON);
+        RequestBody requestBody = RequestBody.create(new Gson().toJson(reqEntity), JSON);
         OkHttpClient client = new OkHttpClient.Builder()
                 .cookieJar(getCookieJar())
                 .build();
@@ -46,9 +45,9 @@ public class PostAsync {
         });
     }
 
-    public static <T1, T2> void postAsync(String url, T2 reqBody, Type typeOfT, ArrayCallback<T1> callback) {
+    public static <T1, T2> void postAsync(String url, T2 reqEntity, Type typeOfT, ArrayCallback<T1> callback) {
         Log.d("postAsync", url);
-        RequestBody requestBody = RequestBody.create(new Gson().toJson(reqBody), JSON);
+        RequestBody requestBody = RequestBody.create(new Gson().toJson(reqEntity), JSON);
         OkHttpClient client = new OkHttpClient.Builder()
                 .cookieJar(getCookieJar())
                 .build();

@@ -22,14 +22,16 @@ import static kp.chonghyok.net.request.Constant.JSON;
 
 public class PostSync {
     @Nullable
-    public static <T1 extends ResponseEntity, T2> List<T1> postSync(String url, T2 reqBody, Type typeOfT) {
+    public static <T1 extends ResponseEntity, T2> List<T1> postSync(String url, T2 reqEntity, Type typeOfT) {
         Thread mThread;
+        RequestBody requestBody = RequestBody.create(new Gson().toJson(reqEntity), JSON);
         ResponseResult<List<T1>> responseResult = new ResponseResult<>();
         OkHttpClient client = new OkHttpClient.Builder()
                 .cookieJar(getCookieJar())
                 .build();
         Request request = new Request.Builder()
                 .url(url)
+                .post(requestBody)
                 .get()
                 .build();
         Call call = client.newCall(request);
@@ -64,10 +66,10 @@ public class PostSync {
     }
 
     @Nullable
-    public static <T1 extends ResponseEntity, T2> T1 postSync(String url, T2 reqBody, Class<T1> classOfT) {
+    public static <T1 extends ResponseEntity, T2> T1 postSync(String url, T2 reqEntity, Class<T1> classOfT) {
         Thread mThread;
         ResponseResult<T1> responseResult = new ResponseResult<>();
-        RequestBody requestBody = RequestBody.create(new Gson().toJson(reqBody), JSON);
+        RequestBody requestBody = RequestBody.create(new Gson().toJson(reqEntity), JSON);
         OkHttpClient client = new OkHttpClient.Builder()
                 .cookieJar(getCookieJar())
                 .build();
