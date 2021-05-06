@@ -39,7 +39,7 @@ public class LocalCookieJar implements CookieJar {
         return cookiesList != null ? cookiesList : new ArrayList<>();
     }
 
-    public List<Cookie> getCookie(String host, String name) {
+    public List<Cookie> getCookies(String host, String name) {
         List<Cookie> cookieList = new ArrayList<>();
         cookiesMap.forEach((httpUrl, cookies) -> {
             if (httpUrl.host().equals(host)) {
