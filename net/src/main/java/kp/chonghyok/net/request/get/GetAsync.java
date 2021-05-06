@@ -30,7 +30,7 @@ public class GetAsync {
         call.enqueue(new okhttp3.Callback() {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                callback.onFailure();
+                callback.onFailure(e.getMessage());
             }
 
             @Override
@@ -74,7 +74,7 @@ public class GetAsync {
         call.enqueue(new Callback() {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                callback.onFailure();
+                callback.onFailure(e.getMessage());
             }
 
             @Override
@@ -85,10 +85,10 @@ public class GetAsync {
                         String html = body.string();
                         callback.onSuccess(html);
                     } else {
-                        callback.onFailure();
+                        callback.onFailure("body为空");
                     }
                 } else {
-                    callback.onFailure();
+                    callback.onFailure("请求失败(非200)");
                 }
             }
         });

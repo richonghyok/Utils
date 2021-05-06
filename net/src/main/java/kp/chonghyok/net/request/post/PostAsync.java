@@ -35,7 +35,7 @@ public class PostAsync {
         call.enqueue(new okhttp3.Callback() {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                callback.onFailure();
+                callback.onFailure(e.getMessage());
             }
 
             @Override
@@ -84,7 +84,7 @@ public class PostAsync {
         call.enqueue(new okhttp3.Callback() {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                callback.onFailure();
+                callback.onFailure(e.getMessage());
             }
 
             @Override
