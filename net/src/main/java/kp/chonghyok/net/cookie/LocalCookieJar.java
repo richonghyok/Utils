@@ -52,4 +52,8 @@ public class LocalCookieJar implements CookieJar {
         });
         return cookieList;
     }
+
+    public static void resetCookieJar() {
+        cookieJar = new LocalCookieJar();
+    }
 }
