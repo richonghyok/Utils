@@ -54,6 +54,7 @@ public class LocalCookieJar implements CookieJar {
     }
 
     public static void resetCookieJar() {
+        cookiesMap = new HashMap<>();
         cookieJar = new LocalCookieJar();
     }
 }
