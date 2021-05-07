@@ -37,7 +37,7 @@ public abstract class ObjCallback<T> implements Callback {
                 onFailure("body为空");
             }
         } else {
-            onFailure("请求失败(非200)");
+            onFailure("请求失败)"+response.code());
         }
     }
 }
